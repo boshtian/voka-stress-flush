@@ -1,0 +1,358 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="utf-8">
+<title>Stress Flush</title>
+<link rel="stylesheet" href="css/style.css" />
+
+<script src="cordova.js"></script>
+<script src="scripts/jquery.min.js"></script>
+<script src="scripts/jquery.knob.js"></script>
+<script src="scripts/jquery-ui.min.js"></script>
+<script src="scripts/jquery.ui.touch-punch.js"></script>
+<!--<script src="js/plugins/SocialSharing.js"></script>-->
+
+<script type="text/javascript" charset="utf-8">
+	
+	// event listeners
+	document.addEventListener("deviceready", onDeviceReady, false);
+	
+	/*
+	$(document).ready(function(e) {
+    onDeviceReady();
+  });
+	*/
+
+	function onDeviceReady() {
+		document.addEventListener("online", onOnline, false);
+		
+		document.addEventListener("resume", onResume, false);
+		
+		document.addEventListener("backbutton", function(e){
+			e.preventDefault();
+			appMusic.release();
+			navigator.app.exitApp();
+		}, false);
+		
+		/* Prepare visual of app */
+		$("#app-wrapper").height($(window).height());
+		
+		$('.stress-slider-wrap').height($('.stress-slider-wrap').width() / 2);
+		$('.sound-slider-wrap').height($('.sound-slider-wrap').width() / 2);
+		
+		var sliderWidth = $('.stress-slider').width();
+		
+		var stressStates = new Array("Non stressed", "Mini stressed", "Stressed", "Ultra stressed", "I'm going crazy");
+		
+		var R = 100;
+		
+		var sliderLock = false;
+		var sliderVal = 0;
+		
+		$stressSlider = $('.stress-slider');
+		$soundSlider = $('.sound-slider');
+		
+		$stressSlider.slider({
+			slide: function( event, ui ) {
+				sliderVal = ui.value;
+				var Y = (sliderVal*2) - 100;
+				$('.stress-slider a').css("top", (100 - (Math.sqrt((R*R) - (Y*Y)))) + "%");
+				setTextState(sliderVal);
+				$soundSlider.slider("value", sliderVal);
+			},
+			change: function( event, ui ) {
+				var sliderVal = ui.value;
+				var Y = (sliderVal*2) - 100;
+				$('.stress-slider a').css("top", (100 - (Math.sqrt((R*R) - (Y*Y)))) + "%");
+			},
+			start: function( event, ui ) {
+				sliderLock = true;
+			},
+			stop: function( event, ui ) {
+				musicSeekTo(ui.value);
+				sliderLock = false;
+			}
+		});
+		
+		$soundSlider.slider({
+			slide: function( event, ui ) {
+				var sliderVal = ui.value;
+				var sliderVal = ui.value;
+				var Y = (sliderVal*2) - 100;
+				$('.sound-slider a').css("top", (Math.sqrt((R*R) - (Y*Y))) + "%");
+				setTextState(sliderVal);
+				$stressSlider.slider("value", sliderVal);
+			},
+			change: function( event, ui ) {
+				var sliderVal = ui.value;
+				var Y = (sliderVal*2) - 100;
+				$('.sound-slider a').css("top", (Math.sqrt((R*R) - (Y*Y))) + "%");
+			},
+			start: function( event, ui ) {
+				sliderLock = true;
+			},
+			stop: function( event, ui ) {
+				musicSeekTo(ui.value);
+				sliderLock = false;
+			}
+		});
+	
+		var buttonWidth = $('.action-button').width();
+		$('.action-button').css('height', buttonWidth+'px').css('line-height', buttonWidth+'px').css("top", (buttonWidth/0.71)*(-1));;
+		
+		
+		/* MUSIC */
+		
+		var timerInterval;
+		var musicPlaying = false;
+		var musicDuration;
+		var appMusic;
+		
+		// Create Media object from src
+		if (device.platform == "Android") {
+			appMusic = new Media("music/stress_app_music.mp3", musicSuccess, musicError);
+		} else {
+			appMusic = new Media("music/stress_app_music.mp3", musicSuccess, musicError);
+		}
+		
+		function musicSuccess(){
+			appMusic.play();
+			appMusic.pause();
+		}
+		
+		function musicError(){
+			alert("Can't load music. Try again.");
+		}
+		
+		function musicSeekTo(value){
+			mDuration = appMusic.getDuration();
+			var musicTime = ((mDuration * (100-value)) / 100) * 1000;
+			appMusic.seekTo(musicTime);
+			updateTimer(appMusic);
+		}
+		
+		$(".action-button").on('touchstart', function(){
+			if (!musicPlaying){
+				appMusic.play({ playAudioWhenScreenIsLocked : true });
+				musicPlaying = true;
+				timerInterval = setInterval(function(){ updateTimer(appMusic); }, 1000);
+				$(this).text("STOP").addClass("playing");
+				// prevent device from sleeping
+				window.plugins.powerManagement.acquire();
+			}
+			else{
+				appMusic.pause();
+				musicPlaying = false;
+				clearInterval(timerInterval);
+				$(this).text("START").removeClass("playing");
+				// allow device to sleep
+				window.plugins.powerManagement.release();
+			}
+		});
+		
+		/* Buttons actions */
+		$("a.btn-again").on('touchstart', function(){
+			$("#app-finished").fadeOut(200);
+			$("#app-content h2").fadeIn(100);
+		});
+		
+		$("a.btn-better").on('touchstart', function(){
+			$("#app-finished").fadeOut(200);
+			$("#app-share").fadeIn(200);
+		});
+		
+		$("a.btn-start").on('touchstart', function(){
+			$("#app-share").fadeOut(200);
+			$("#app-content h2").fadeIn(100);
+		});
+		
+		$("a.btn-info").on('touchstart', function(){
+			$("#app-info").fadeIn(200);
+		});
+		
+		$("a.btn-info-close").on('touchstart', function(){
+			$("#app-info").fadeOut(200);
+		});
+		
+		$("a.btn-facebook").on('touchstart', function(){
+			$(this).toggleClass('active');
+		});
+		
+		$("a.btn-twitter").on('touchstart', function(){
+			$(this).toggleClass('active');
+		});
+		
+		$("a.btn-share").on('touchstart', function(){
+			var msg = $("#share-text").val();
+			if (msg == ""){
+				alert("Type in some text.");
+			}
+			else{
+				window.plugins.socialsharing.share(msg, 'Stress Flush');
+			}
+		});
+		
+		$("a.external-link").on('touchstart', function(){
+			url = $(this).attr('rel');
+			openURL(url);
+		});
+		
+		/* End Button Actions */
+		
+		/* Other Functions */
+		
+		function toDegrees (angle) {
+			return angle * (180 / Math.PI);
+		}
+		
+		function toRadians (angle) {
+			return angle * (Math.PI / 180);
+		}
+		
+		function updateTimer(appMusic) {
+			var m, s;
+			
+			appMusic.getCurrentPosition(
+				function (position) {
+					if (position > -1) {
+						time = Math.round(appMusic.getDuration() - position);
+						if (time <= 0){
+							clearInterval(timerInterval);
+							m = Math.floor(time / 60);
+							m = isNaN(m) ? "--" : m >= 10 ? m : "0" + m;
+							s = Math.floor(time % 60);
+							s = isNaN(s) ? "--" : s >= 10 ? s : "0" + s;
+							$("span.min").text(m);
+							$("span.sec").text(s);
+							appMusic.pause();
+							$("#app-content h2").fadeOut(200);
+							$("#app-finished").fadeIn(200);
+							$(".action-button").text("START").removeClass("playing");
+						}
+						else{
+							m = Math.floor(time / 60);
+							m = isNaN(m) ? "--" : m >= 10 ? m : "0" + m;
+							s = Math.floor(time % 60);
+							s = isNaN(s) ? "--" : s >= 10 ? s : "0" + s;
+							$("span.min").text(m);
+							$("span.sec").text(s);
+							if (sliderLock == false){
+								setTextState($('.stress-slider').slider("value"));						
+								setSliderPosition(position);
+							}
+						}
+					}
+				},
+				// error callback
+				function (e) {
+						console.log("Error getting pos=" + e);
+				}
+			);
+		}
+		
+		function setTextState(value){
+			$(".stress-state").text(stressStates[Math.floor(value/20)]);
+		}
+		
+		function setSliderPosition(pos){
+			var sliderPos = 100 - ((pos / appMusic.getDuration()) * 100);
+			$('.stress-slider').slider("value", sliderPos);
+			$soundSlider.slider("value", sliderPos);
+		}
+		
+		function openURL(url){
+			var devicePlatform = device.platform;
+			if (devicePlatform == "Android"){
+				navigator.app.loadUrl(url, { openExternal:true });
+			}
+			else if ((devicePlatform == "iPhone") || (devicePlatform == "iOS")){
+				window.open(url, '_system');
+			}
+			return false;
+		}
+		
+	} // End onDeviceReady()
+	
+	function onOnline(){
+	}
+	
+	function onResume(){
+	}
+	
+	/*
+	// on mobileinit
+	$(document).on("mobileinit", function() {
+		$.mobile.buttonMarkup.hoverDelay = 25;
+		$.mobile.defaultPageTransition = 'none';
+		$.mobile.defaultDialogTransition = 'none';
+	  $.mobile.useFastClick = false;
+	});
+	*/	
+</script>
+</head> 
+
+<body> 
+
+  <div data-role="page" id="app-wrapper">
+    <div data-role="content" id="app-content">
+      <h2 class="stress-state">Non stressed</h2>
+      <div class="circle-slider">
+        <div class="stress-slider-wrap"><div class="slider stress-slider"></div></div>
+        <div class="sound-slider-wrap"><div class="slider sound-slider"></div></div>
+        <div class="action-button">START</div>
+      </div>
+      <div class="timer">
+        <div class="title">DURATION:<span class="debug"></span></div>
+        <div class="time"><span class="min">00</span>M <span class="sec">00</span>S</div>
+      </div>
+      <a data-role="button" class="btn-info">INFO</a>
+    </div>
+    
+    <div data-role="content" id="app-finished">
+      <h2>Feeling relaxed?</h2>
+      <div class="btn-again-wrap">
+        <a data-role="button" class="btn-again">Need one more time</a>
+      </div>
+      <div class="btn-better-wrap">
+        <a data-role="button" class="btn-better">I'm better now</a>
+      </div>
+    </div>
+    
+    <div data-role="content" id="app-share">
+      <h2>I'm better now</h2>
+     	<div class="share-text-wrapper">
+      	<textarea id="share-text" placeholder="Share your thoughts ..."></textarea>
+      </div>
+      <div class="buttons-wrapper">
+        <!--
+        <div class="social-wrapper">
+        	<div class="btn-facebook-wrap">
+	          <a data-role="button" class="btn-facebook">Facebook</a>
+          </div>
+          <div class="btn-twitter-wrap">
+	          <a data-role="button" class="btn-twitter">Twitter</a>
+          </div>
+        </div>
+        -->
+        <div class="btn-share-wrap">
+	        <a data-role="button" class="btn-share">Share</a>
+        </div>
+        <div class="btn-start-wrapper"><a data-role="button" class="btn-start">Start screen</a></div>
+      </div>
+    </div>
+    
+    <div data-role="content" id="app-info">
+    	<h2>About</h2>
+      <p>A must have for every hard worker out there! Stress Flush is a superchilling app which helps you to relax during work or after work hours. Easy and helpfull. Try it, enjoy it, share it.</p>
+			<p>And pay atention … the more you use it, sooner we'll upgrade it.<br /><br /></p>
+      <p class="align-center"><img src="images/voka-logo.svg" /></p>
+      <p class="align-center">JP VODOVOD - KANALIZACIJA d.o.o.<br />Vodovodna cesta 90, SI-1000 Ljubljana<br /><a href="#" class="external-link" rel="http://www.vo-ka.si">www.vo-ka.si</a></p>
+      <p class="align-center">© 2013 JP VODOVOD - KANALIZACIJA d.o.o.<br />Designed by: <a href="#" class="external-link" rel="http://www.enki.eu">ENKI</a></p>
+      <div class="btn-info-close-wrap">
+	      <a data-role="button" class="btn-info-close">Close</a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
