@@ -116,12 +116,14 @@
 		}
 		
 		function musicSuccess(){
+			console.log("success");
 			appMusic.play();
 			appMusic.pause();
 		}
 		
-		function musicError(){
-			alert("Can't load music. Try again.");
+		function musicError(e){
+			console.log("error");
+			alert("Can't load music.");
 		}
 		
 		function musicSeekTo(value){
@@ -305,7 +307,7 @@
         <div class="title">DURATION:<span class="debug"></span></div>
         <div class="time"><span class="min">00</span>M <span class="sec">00</span>S</div>
       </div>
-      <a data-role="button" class="btn-info">INFO.</a>
+      <a data-role="button" class="btn-info">INFO</a>
     </div>
     
     <div data-role="content" id="app-finished">
