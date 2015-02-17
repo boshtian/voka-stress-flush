@@ -24,16 +24,17 @@
 	*/
 
 	function onDeviceReady() {
+		alert("1");
 		document.addEventListener("online", onOnline, false);
-		
+		alert("2");
 		document.addEventListener("resume", onResume, false);
-		
+		alert("3");
 		document.addEventListener("backbutton", function(e){
 			e.preventDefault();
 			appMusic.release();
 			navigator.app.exitApp();
 		}, false);
-		
+		alert("4");
 		/* Prepare visual of app */
 		$("#app-wrapper").height($(window).height());
 		
