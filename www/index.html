@@ -24,7 +24,6 @@
 	*/
 
 	function onDeviceReady() {
-		
 		document.addEventListener("online", onOnline, false);
 		
 		document.addEventListener("resume", onResume, false);
@@ -109,31 +108,24 @@
 		var musicPlaying = false;
 		var musicDuration;
 		var appMusic;
-		
-		alert('platform: ' + device.platform);
 
 		// Create Media object from src
 		if (device.platform == "Android") {
-			alert("2");
 			appMusic = new Media("file:///android_asset/www/music/stress_app_music.mp3", musicSuccess, musicError);
 		} else {
-			alert("3");
 			appMusic = new Media("music/stress_app_music.mp3", musicSuccess, musicError);
 		}
 		
 		function musicSuccess(){
-			alert("4.1");
 			appMusic.play();
 			appMusic.pause();
 		}
 		
 		function musicError(e){
-			alert("4.2");
 			alert("Can't load music. " + e.message);
 		}
 		
-		function musicSeekTo(value){
-			alert("5");
+		function musicSeekTo(value){			
 			mDuration = appMusic.getDuration();
 			var musicTime = ((mDuration * (100-value)) / 100) * 1000;
 			appMusic.seekTo(musicTime);
@@ -141,9 +133,7 @@
 		}
 		
 		$(".action-button").on('touchstart', function(){
-			alert("6");
 			if (!musicPlaying){
-				alert("7");
 				appMusic.play({ playAudioWhenScreenIsLocked : true });
 				musicPlaying = true;
 				timerInterval = setInterval(function(){ updateTimer(appMusic); }, 1000);
@@ -152,7 +142,6 @@
 				window.plugins.powerManagement.acquire();
 			}
 			else{
-				alert("8");
 				appMusic.pause();
 				musicPlaying = false;
 				clearInterval(timerInterval);
@@ -179,12 +168,10 @@
 		});
 		
 		$("a.btn-info").on('touchstart', function(){
-			alert("9");
 			$("#app-info").fadeIn(200);
 		});
 		
 		$("a.btn-info-close").on('touchstart', function(){
-			alert("10");
 			$("#app-info").fadeOut(200);
 		});
 		
@@ -225,7 +212,6 @@
 		
 		function updateTimer(appMusic) {
 			var m, s;
-			alert("12");
 			appMusic.getCurrentPosition(
 				function (position) {
 					if (position > -1) {
