@@ -101,8 +101,7 @@
 		});
 	
 		var buttonWidth = $('.action-button').width();
-		$('.action-button').css('height', buttonWidth+'px').css('line-height', buttonWidth+'px').css("top", (buttonWidth/0.71)*(-1));;
-		
+		$('.action-button').css('height', buttonWidth+'px').css('line-height', buttonWidth+'px').css("top", (buttonWidth/0.71)*(-1));
 		
 		/* MUSIC */
 		
@@ -123,12 +122,13 @@
 		}
 		
 		function musicSuccess(){
-			alert("4");
+			alert("4.1");
 			appMusic.play();
 			appMusic.pause();
 		}
 		
 		function musicError(e){
+			alert("4.2");
 			alert("Can't load music. " + e.message);
 		}
 		

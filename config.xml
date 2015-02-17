@@ -4,50 +4,54 @@
     id        = "si.enki.stressflush"
     version   = "1.0">
 
-<name>Stress Flush</name>
+  <name>Stress Flush</name>
+  <description>A must have for every hard worker out there! Stress Flush is a superchilling app which helps you to relax during work or after work hours. Easy and helpfull. Try it, enjoy it, share it.</description>
+  <author href="http://www.enki.si" email="info@enki.si">ENKI</author>
 
-<gap:platform name="ios" />
-<gap:platform name="android" />
+  <content src="index.html" />
 
-<preference name="phonegap-version" value="3.6.3" />
-<preference name="android-targetSdkVersion" value="14" />
-<preference name="android-minSdkVersion" value="7" />
+  <gap:platform name="ios" />
+  <gap:platform name="android" />
 
-<preference name="fullscreen" value="true" />
-<preference name="orientation" value="portrait" />
+  <preference name="phonegap-version" value="3.6.3" />
+  <preference name="android-targetSdkVersion" value="14" />
+  <preference name="android-minSdkVersion" value="10" />
+  <preference name="ios-statusbarstyle" value="black-opaque" />
+  <preference name="show-splash-screen-spinner" value="true" />
+  <preference name="auto-hide-splash-screen" value="true" />
+  <preference name="android-installLocation" value="auto" />
+  <preference name="fullscreen" value="true" />
+  <preference name="orientation" value="portrait" />
+  
+  <preference name="permissions" value="none"/>
+  <!-- enable individual permissions -->
+  <feature name="http://api.phonegap.com/1.0/network"/>
 
-<preference name="permissions" value="none"/>
-<!-- enable individual permissions -->
-<feature name="http://api.phonegap.com/1.0/network"/>
+  <!-- add plugins -->
+  <!-- <gap:plugin name="org.apache.cordova.media" version="0.2.13" /> -->
+  <gap:plugin name="nl.x-services.plugins.socialsharing" source="plugins.cordova.io" />
+  <gap:plugin name="com.simplec.plugins.powermanagement" version="0.4.0" />
 
-<!-- add plugins -->
-<gap:plugin name="org.apache.cordova.media" version="0.2.13" />
-<gap:plugin name="nl.x-services.plugins.socialsharing" source="plugins.cordova.io" />
-<gap:plugin name="com.simplec.plugins.powermanagement" version="0.4.0" />
+  <icon src="icons/ios/icon-57.png" gap:platform="ios" width="57" height="57" />
+  <icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
+  <icon src="icons/ios/icon-114.png" gap:platform="ios" width="114" height="114" />
+  <icon src="icons/ios/icon-144.png" gap:platform="ios" width="144" height="144" />
+  <icon src="icons/android/icon-ldpi.png" gap:platform="android" gap:density="ldpi" />
+  <icon src="icons/android/icon-mdpi.png" gap:platform="android" gap:density="mdpi" />
+  <icon src="icons/android/icon-hdpi.png" gap:platform="android" gap:density="hdpi" />
+  <icon src="icons/android/icon-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
-<icon src="icons/ios/icon-57.png" gap:platform="ios" width="57" height="57" />
-<icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
-<icon src="icons/ios/icon-114.png" gap:platform="ios" width="114" height="114" />
-<icon src="icons/ios/icon-144.png" gap:platform="ios" width="144" height="144" />
-<icon src="icons/android/icon-ldpi.png" gap:platform="android" gap:density="ldpi" />
-<icon src="icons/android/icon-mdpi.png" gap:platform="android" gap:density="mdpi" />
-<icon src="icons/android/icon-hdpi.png" gap:platform="android" gap:density="hdpi" />
-<icon src="icons/android/icon-xhdpi.png" gap:platform="android" gap:density="xhdpi" />
-
-<gap:splash src="splash/splash.png" />
-<gap:splash src="splash/ios/Default.png" width="320" height="480" />
-<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
-<gap:splash src="splash/ios/Default_iphone5.png" width="640" height="1136" />
-<gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
-<gap:splash src="splash/ios/Default-Portrait.png" width="768" height="1024" />
-<gap:splash src="splash/ios/Default-Landscape_at_2x.png" width="2048" height="1496" />
-<gap:splash src="splash/ios/Default-Portrait_at_2x.png" width="1536" height="2008" />
-<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
-<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
-<gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-<gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
-
-<description>A must have for every hard worker out there! Stress Flush is a superchilling app which helps you to relax during work or after work hours. Easy and helpfull. Try it, enjoy it, share it.</description>
-<author href="http://www.enki.si" email="info@enki.si">ENKI</author>
+  <gap:splash src="splash/splash.png" />
+  <gap:splash src="splash/ios/Default.png" width="320" height="480" />
+  <gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
+  <gap:splash src="splash/ios/Default_iphone5.png" width="640" height="1136" />
+  <gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
+  <gap:splash src="splash/ios/Default-Portrait.png" width="768" height="1024" />
+  <gap:splash src="splash/ios/Default-Landscape_at_2x.png" width="2048" height="1496" />
+  <gap:splash src="splash/ios/Default-Portrait_at_2x.png" width="1536" height="2008" />
+  <gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
+  <gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
+  <gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
+  <gap:splash src="splash/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
 
 </widget>
