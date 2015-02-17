@@ -115,7 +115,7 @@
 		// Create Media object from src
 		if (device.platform == "Android") {
 			alert("2");
-			appMusic = new Media("/android_asset/www/music/stress_app_music.mp3", musicSuccess, musicError);
+			appMusic = new Media("file:///android_asset/www/music/stress_app_music.mp3", musicSuccess, musicError);
 		} else {
 			alert("3");
 			appMusic = new Media("music/stress_app_music.mp3", musicSuccess, musicError);
