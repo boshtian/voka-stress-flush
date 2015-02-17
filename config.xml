@@ -21,9 +21,9 @@
 <feature name="http://api.phonegap.com/1.0/network"/>
 
 <!-- add plugins -->
-<gap:plugin name="org.apache.cordova.media" />
+<gap:plugin name="org.apache.cordova.media" version="0.2.13" />
 <gap:plugin name="nl.x-services.plugins.socialsharing" source="plugins.cordova.io" />
-<gap:plugin name="com.simplec.plugins.powermanagement" />
+<gap:plugin name="com.simplec.plugins.powermanagement" version="0.4.0" />
 
 <icon src="icons/ios/icon-57.png" gap:platform="ios" width="57" height="57" />
 <icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
