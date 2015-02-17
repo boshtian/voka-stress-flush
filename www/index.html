@@ -111,9 +111,7 @@
 
 		// Create Media object from src
 		if (device.platform == "Android") {
-			alert('1');
 			appMusic = new Media("file:///android_asset/www/music/stress_app_music.mp3", musicSuccess, musicError);
-			alert('2');
 			appMusic.play();
 			appMusic.pause();
 		} else {
@@ -131,9 +129,7 @@
 		
 		function musicSeekTo(value){			
 			mDuration = appMusic.getDuration();
-			alert(mDuration);
 			var musicTime = ((mDuration * (100-value)) / 100) * 1000;
-			alert(musicTime);
 			appMusic.seekTo(musicTime);
 			updateTimer(appMusic);
 		}
