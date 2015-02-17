@@ -32,7 +32,11 @@
 		document.addEventListener("backbutton", function(e){
 			alert("1");
 			e.preventDefault();
-			appMusic.release();
+			alert("1.1");
+			if (appMusic){
+				appMusic.release();
+			}
+			alert("1.2");
 			navigator.app.exitApp();
 		}, false);
 		
