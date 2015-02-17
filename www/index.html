@@ -30,13 +30,10 @@
 		document.addEventListener("resume", onResume, false);
 		
 		document.addEventListener("backbutton", function(e){
-			alert("1");
 			e.preventDefault();
-			alert("1.1");
 			if (appMusic){
 				appMusic.release();
 			}
-			alert("1.2");
 			navigator.app.exitApp();
 		}, false);
 		
@@ -114,6 +111,8 @@
 		var musicDuration;
 		var appMusic;
 		
+		alert('platform: ' + device.platform);
+
 		// Create Media object from src
 		if (device.platform == "Android") {
 			alert("2");
