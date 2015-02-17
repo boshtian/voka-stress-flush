@@ -110,20 +110,18 @@
 		
 		// Create Media object from src
 		if (device.platform == "Android") {
-			appMusic = new Media("/android_asset/www/music/stress_app_music.mp3", musicSuccess, musicError);
+			appMusic = new Media("file:///android_asset/www/music/stress_app_music.mp3", musicSuccess, musicError);
 		} else {
 			appMusic = new Media("music/stress_app_music.mp3", musicSuccess, musicError);
 		}
 		
 		function musicSuccess(){
-			console.log("success");
 			appMusic.play();
 			appMusic.pause();
 		}
 		
 		function musicError(e){
-			console.log("error");
-			alert("Can't load music.");
+			alert("Can't load music. " + e.message);
 		}
 		
 		function musicSeekTo(value){
