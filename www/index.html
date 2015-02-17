@@ -24,17 +24,18 @@
 	*/
 
 	function onDeviceReady() {
-		alert("1");
+		
 		document.addEventListener("online", onOnline, false);
-		alert("2");
+		
 		document.addEventListener("resume", onResume, false);
-		alert("3");
+		
 		document.addEventListener("backbutton", function(e){
+			alert("1");
 			e.preventDefault();
 			appMusic.release();
 			navigator.app.exitApp();
 		}, false);
-		alert("4");
+		
 		/* Prepare visual of app */
 		$("#app-wrapper").height($(window).height());
 		
@@ -111,13 +112,15 @@
 		
 		// Create Media object from src
 		if (device.platform == "Android") {
+			alert("2");
 			appMusic = new Media("/android_asset/www/music/stress_app_music.mp3", musicSuccess, musicError);
 		} else {
+			alert("3");
 			appMusic = new Media("music/stress_app_music.mp3", musicSuccess, musicError);
 		}
 		
 		function musicSuccess(){
-			alert("success");
+			alert("4");
 			appMusic.play();
 			appMusic.pause();
 		}
@@ -127,6 +130,7 @@
 		}
 		
 		function musicSeekTo(value){
+			alert("5");
 			mDuration = appMusic.getDuration();
 			var musicTime = ((mDuration * (100-value)) / 100) * 1000;
 			appMusic.seekTo(musicTime);
@@ -134,7 +138,9 @@
 		}
 		
 		$(".action-button").on('touchstart', function(){
+			alert("6");
 			if (!musicPlaying){
+				alert("7");
 				appMusic.play({ playAudioWhenScreenIsLocked : true });
 				musicPlaying = true;
 				timerInterval = setInterval(function(){ updateTimer(appMusic); }, 1000);
@@ -143,6 +149,7 @@
 				window.plugins.powerManagement.acquire();
 			}
 			else{
+				alert("8");
 				appMusic.pause();
 				musicPlaying = false;
 				clearInterval(timerInterval);
@@ -169,10 +176,12 @@
 		});
 		
 		$("a.btn-info").on('touchstart', function(){
+			alert("9");
 			$("#app-info").fadeIn(200);
 		});
 		
 		$("a.btn-info-close").on('touchstart', function(){
+			alert("10");
 			$("#app-info").fadeOut(200);
 		});
 		
@@ -213,7 +222,7 @@
 		
 		function updateTimer(appMusic) {
 			var m, s;
-			
+			alert("12");
 			appMusic.getCurrentPosition(
 				function (position) {
 					if (position > -1) {
