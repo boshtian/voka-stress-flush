@@ -116,6 +116,8 @@
 			appMusic.pause();
 		} else {
 			appMusic = new Media("music/stress_app_music.mp3", musicSuccess, musicError);
+			appMusic.play();
+			appMusic.pause();
 		}
 		
 		function musicSuccess(){
