@@ -2,7 +2,7 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
     xmlns:gap = "http://phonegap.com/ns/1.0"
     id        = "si.enki.stressflush"
-    version   = "1.1">
+    version   = "1.1.1">
 
   <name>Stress Flush</name>
   <description>A must have for every hard worker out there! Stress Flush is a superchilling app which helps you to relax during work or after work hours. Easy and helpfull. Try it, enjoy it, share it.</description>
